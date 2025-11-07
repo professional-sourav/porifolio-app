@@ -1,809 +1,628 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sourav Chakraborty | Full-Stack Developer</title>
-    
-    <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sourav Chakraborty | Full-Stack Developer</title>
 
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
-                },
-            },
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'Plus Jakarta Sans', 'sans-serif']
+          },
+          colors: {
+            ink: '#0f172a',
+            blurple: '#6d28d9'
+          },
+          boxShadow: {
+            glow: '0 10px 50px rgba(79, 70, 229, 0.35)'
+          }
         }
-    </script>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+      }
+    }
+  </script>
 
-    <style>
-        /* Base font */
-        body {
-            font-family: 'Inter', sans-serif;
-        }
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap"
+    rel="stylesheet"
+  />
 
-        /* Simple fade-in-up animation on scroll */
-        /* We'll use JS to add the 'is-visible' class */
-        .fade-in-up {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s cubic-bezier(0.65, 0, 0.35, 1), transform 0.6s cubic-bezier(0.65, 0, 0.35, 1);
-        }
+  <style>
+    :root { color-scheme: light dark; }
+    body { font-family: 'Inter', sans-serif; background-color: #f8fafc; transition: background-color .4s ease, color .4s ease; }
+    .glass-panel {
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      backdrop-filter: blur(18px);
+      transition: background .4s ease, border-color .4s ease, box-shadow .4s ease;
+    }
+    html.dark .glass-panel {
+      background: linear-gradient(145deg, rgba(15,23,42,0.65), rgba(30,27,75,0.55));
+      border-color: rgba(148, 163, 184, 0.2);
+      box-shadow: 0 20px 50px rgba(15, 23, 42, 0.45);
+    }
+    html:not(.dark) .glass-panel {
+      background: linear-gradient(145deg, rgba(255,255,255,0.85), rgba(248,250,252,0.75));
+      border-color: rgba(15, 23, 42, 0.08);
+      box-shadow: 0 20px 45px rgba(15, 23, 42, 0.08);
+    }
+    .chip {
+      border: 1px solid rgba(99,102,241,0.4);
+      background: rgba(99,102,241,0.08);
+      transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+    html:not(.dark) .chip { background: rgba(99,102,241,0.12); border-color: rgba(79,70,229,0.35); color: #312e81; }
+    html.dark .chip { color: #c7d2fe; }
+    .chip:hover { transform: translateY(-2px); border-color: rgba(79,70,229,0.8); }
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .floating { animation: float 6s ease-in-out infinite; }
+    @keyframes float { 0% { transform: translateY(0); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0); } }
+    #scrollTopBtn { bottom: -4rem; transition: bottom .3s ease, box-shadow .3s ease; }
+    #scrollTopBtn.show { bottom: 1.5rem; }
+  </style>
 
-        .is-visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Scroll-to-top button styles */
-        #scrollTopBtn {
-            position: fixed;
-            bottom: -100px; /* Start off-screen */
-            right: 20px;
-            z-index: 50;
-            transition: bottom 0.3s ease-in-out;
-        }
-
-        #scrollTopBtn.show {
-            bottom: 20px; /* Animate in */
-        }
-
-        /* Mobile menu overlay */
-        #mobile-menu {
-            transform: translateY(-100%);
-            transition: transform 0.3s ease-in-out;
-        }
-
-        #mobile-menu.open {
-            transform: translateY(0);
-        }
-    </style>
-
-    <script>
-        // Set 'dark' class on <html> as soon as possible
-        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-        }
-    </script>
+  <script>
+    if (
+      localStorage.theme === 'dark' ||
+      (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
+    ) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  </script>
 </head>
-<body class="bg-gray-50 text-gray-900 dark:bg-gray-950 dark:text-gray-100 transition-colors duration-300 antialiased relative overflow-x-hidden">
 
-    <div class="absolute top-0 left-0 w-full h-full -z-10" aria-hidden="true">
-        <div class="absolute top-0 left-0 w-[40rem] h-[40rem] bg-indigo-500/20 dark:bg-indigo-500/10 rounded-full blur-[10rem] -translate-x-1/2"></div>
-        <div class="absolute bottom-0 right-0 w-[50rem] h-[50rem] bg-purple-500/20 dark:bg-purple-500/10 rounded-full blur-[12rem] translate-x-1/4 translate-y-1/4"></div>
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 antialiased relative overflow-x-hidden">
+  <!-- background glow -->
+  <div class="absolute inset-0 -z-10">
+    <div class="absolute top-0 right-0 w-[40rem] h-[40rem] bg-purple-300/30 dark:bg-purple-600/30 blur-[180px]"></div>
+    <div class="absolute -bottom-32 -left-16 w-[34rem] h-[34rem] bg-blue-200/30 dark:bg-blue-600/20 blur-[150px]"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(15,23,42,0.08),_transparent_55%)] dark:bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.08),_transparent_55%)]"></div>
+  </div>
+
+  <!-- header -->
+  <header class="sticky top-0 z-50 backdrop-blur-xl bg-white/80 dark:bg-slate-950/80 border-b border-slate-200/70 dark:border-slate-800/60">
+    <nav class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
+      <a href="#home" class="text-lg font-semibold tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
+        <span class="h-10 w-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 grid place-items-center font-bold text-white">SC</span>
+        Sourav Chakraborty
+      </a>
+
+      <button id="mobile-toggle" class="md:hidden p-2 rounded-full border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+
+      <div id="desktop-menu" class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600 dark:text-slate-300">
+        <a href="#about" class="hover:text-slate-900 dark:hover:text-white">About</a>
+        <a href="#experience" class="hover:text-slate-900 dark:hover:text-white">Experience</a>
+        <a href="#skills" class="hover:text-slate-900 dark:hover:text-white">Skills</a>
+        <a href="#contact" class="hover:text-slate-900 dark:hover:text-white">Contact</a>
+        <button id="theme-toggle" class="p-2.5 rounded-full border border-black/10 dark:border-white/10 text-slate-700 dark:text-white hover:border-slate-400/70 dark:hover:border-white/40 hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
+          <svg id="icon-sun" class="w-5 h-5 hidden" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M12 4.5v-2m0 19v-2M19.5 12h2m-19 0h2M17.157 6.843l1.414-1.414M5.429 18.571l1.414-1.414M17.157 17.157l1.414 1.414M5.429 5.429l1.414 1.414M12 7.5a4.5 4.5 0 110 9 4.5 4.5 0 010-9z"/></svg>
+          <svg id="icon-moon" class="w-5 h-5 hidden" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M21 15a9 9 0 01-9 9 9 9 0 010-18c.777 0 1.533.099 2.253.286A6.002 6.002 0 0021 15z"/></svg>
+        </button>
+      </div>
+    </nav>
+
+    <div id="mobile-menu" class="md:hidden hidden border-t border-black/10 dark:border-white/5 bg-white/95 dark:bg-slate-950/95">
+      <div class="px-4 py-4 space-y-4 text-slate-700 dark:text-slate-200 text-sm">
+        <a href="#about" class="block hover:text-slate-900 dark:hover:text-white">About</a>
+        <a href="#experience" class="block hover:text-slate-900 dark:hover:text-white">Experience</a>
+        <a href="#skills" class="block hover:text-slate-900 dark:hover:text-white">Skills</a>
+        <a href="#contact" class="block hover:text-slate-900 dark:hover:text-white">Contact</a>
+        <button id="theme-toggle-mobile" class="w-full px-4 py-2 border border-black/10 dark:border-white/10 rounded-lg text-slate-700 dark:text-white hover:bg-black/5 dark:hover:bg-white/5 transition-colors">Toggle theme</button>
+      </div>
     </div>
+  </header>
 
-    <header class="sticky top-0 z-40 w-full backdrop-blur-lg bg-white/80 dark:bg-gray-950/80 border-b border-gray-200 dark:border-gray-800 transition-colors duration-300">
-        <nav class="container mx-auto max-w-6xl px-4 py-4 flex justify-between items-center">
-            <a href="#home" class="text-xl font-bold tracking-tight text-indigo-600 dark:text-indigo-400">
-                Sourav Chakraborty
+  <main class="relative max-w-6xl mx-auto px-4 sm:px-6">
+    <!-- hero -->
+    <section id="home" class="pt-20 pb-24 flex items-center min-h-[80vh]">
+      <div class="grid gap-12 lg:grid-cols-2">
+        <div class="space-y-10 reveal">
+          <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 text-slate-700 dark:text-slate-200">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            Available for remote collaborations
+          </div>
+          <div>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-semibold leading-tight text-slate-900 dark:text-white">
+              Crafting resilient web platforms with Laravel, React & Generative AI.
+            </h1>
+            <p class="mt-6 text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
+              I'm Sourav, a senior full-stack engineer with 8+ years of experience turning product ideas into performant, secure systems.
+              From multi-tenant SaaS to AI-assisted workflows, I merge engineering depth with thoughtful design.
+            </p>
+          </div>
+          <div class="flex flex-col sm:flex-row gap-4">
+            <a href="#contact" class="flex-1 sm:flex-none px-6 py-3 text-center rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-glow font-semibold">
+              Start a project
             </a>
-
-            <div class="hidden md:flex items-center space-x-6">
-                <a href="#about" class="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">About</a>
-                <a href="#experience" class="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Experience</a>
-                <a href="#skills" class="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Skills</a>
-                <a href="#contact" class="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Contact</a>
-                
-                <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-                    <svg id="theme-icon-light" class="h-5 w-5 text-gray-700 dark:text-gray-300 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                    </svg>
-                    <svg id="theme-icon-dark" class="h-5 w-5 text-gray-700 dark:text-gray-300 dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                    </svg>
-                </button>
+            <a href="#experience" class="flex-1 sm:flex-none px-6 py-3 text-center rounded-xl border border-black/10 dark:border-white/20 text-slate-900 dark:text-white hover:bg-black/5 dark:hover:bg-white/10">
+              View experience
+            </a>
+          </div>
+          <div class="grid grid-cols-3 gap-6 text-sm text-slate-500 dark:text-slate-300">
+            <div>
+              <p class="text-3xl font-semibold text-slate-900 dark:text-white">8+</p>
+              <p>Years shipping production software</p>
             </div>
-
-            <div class="md:hidden flex items-center">
-                <button id="theme-toggle-mobile" class="p-2 mr-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-                    <svg id="theme-icon-light-mobile" class="h-5 w-5 text-gray-700 dark:text-gray-300 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                    </svg>
-                    <svg id="theme-icon-dark-mobile" class="h-5 w-5 text-gray-700 dark:text-gray-300 dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                    </svg>
-                </button>
-                <button id="mobile-menu-btn" class="p-2 rounded-md text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
-                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                    </svg>
-                </button>
+            <div>
+              <p class="text-3xl font-semibold text-slate-900 dark:text-white">45+</p>
+              <p>Products & digital initiatives delivered</p>
             </div>
-        </nav>
-
-        <div id="mobile-menu" class="fixed inset-0 z-50 md:hidden bg-gray-100 dark:bg-gray-950 p-6 space-y-6">
-            <div class="flex justify-between items-center">
-                <a href="#home" class="text-xl font-bold tracking-tight text-indigo-600 dark:text-indigo-400">
-                    Sourav Chakraborty
-                </a>
-                <button id="mobile-menu-close-btn" class="p-2 rounded-md text-gray-600 dark:text-gray-300">
-                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
+            <div>
+              <p class="text-3xl font-semibold text-slate-900 dark:text-white">&lt;24h</p>
+              <p>Average response time for new projects</p>
             </div>
-            <nav class="flex flex-col space-y-4">
-                <a href="#about" class="mobile-nav-link text-2xl font-medium text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400">About</a>
-                <a href="#experience" class="mobile-nav-link text-2xl font-medium text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400">Experience</a>
-                <a href="#skills" class="mobile-nav-link text-2xl font-medium text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400">Skills</a>
-                <a href="#contact" class="mobile-nav-link text-2xl font-medium text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400">Contact</a>
-            </nav>
+          </div>
         </div>
-    </header>
 
-    <main class="container mx-auto max-w-6xl px-4 py-8 md:py-16">
-
-        <section id="home" class="min-h-[85vh] flex items-center">
-            <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                <div class="space-y-6 text-center md:text-left">
-                    <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter">
-                        Hi, I'm <span class="text-indigo-600 dark:text-indigo-400">Sourav</span>
-                    </h1>
-                    <p class="text-xl md:text-2xl font-medium text-gray-700 dark:text-gray-300">
-                        A Full-Stack Developer passionate about building scalable web applications and APIs.
-                    </p>
-                    <p class="text-gray-600 dark:text-gray-400">
-                        With 8+ years of experience, I specialize in Laravel, WordPress, and React.js, leveraging Generative AI to deliver elegant, user-centric solutions.
-                    </p>
-                    <div class="flex justify-center md:justify-start space-x-4 pt-4">
-                        <a href="#contact" class="px-6 py-3 bg-indigo-600 text-white font-medium rounded-lg shadow-lg hover:bg-indigo-700 transition-all duration-300 transform hover:scale-105">
-                            Get In Touch
-                        </a>
-                        <a href="#experience" class="px-6 py-3 bg-gray-200 text-gray-800 dark:bg-gray-800 dark:text-gray-200 font-medium rounded-lg shadow-lg hover:bg-gray-300 dark:hover:bg-gray-700 transition-all duration-300">
-                            View My Work
-                        </a>
-                    </div>
-                </div>
-                
-                <div class="flex justify-center items-center">
-                    <div class="relative w-72 h-72 md:w-96 md:h-96">
-                        <div class="absolute inset-0 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full blur-xl opacity-60 dark:opacity-40"></div>
-                        <img 
-                            src="assets/images/me2.png" 
-                            alt="Sourav Chakraborty" 
-                            class="relative w-full h-full object-cover object-top rounded-full shadow-2xl border-4 border-white dark:border-gray-800"
-                            onerror="this.onerror=null; this.src='https://placehold.co/400x400/6366f1/ffffff?text=SC';"
-                        >
-                    </div>
-                </div>
+        <div class="relative reveal">
+          <div class="glass-panel rounded-[2.5rem] p-6 shadow-2xl">
+            <div class="relative rounded-[2rem] bg-gradient-to-br from-indigo-500/40 to-purple-500/40">
+              <div class="overflow-hidden rounded-[2rem] border border-white/10 bg-black/20">
+                <img
+                  src="assets/images/me2.png"
+                  alt="Sourav Chakraborty portrait"
+                  class="object-cover w-full h-full"
+                  onerror="this.onerror=null; this.src='https://placehold.co/520x600/4c1d95/ffffff?text=SC';"
+                />
+              </div>
+              <div class="absolute -top-6 -right-6 floating glass-panel rounded-2xl px-5 py-4 text-sm text-slate-700 dark:text-slate-200">
+                <p class="text-xs uppercase tracking-wide text-indigo-600 dark:text-indigo-200">Core stack</p>
+                <p class="font-semibold text-slate-900 dark:text-white">Laravel &middot; WordPress &middot; FastAPI &middot; React</p>
+              </div>
+              <div class="absolute -bottom-6 -left-6 floating delay-200 glass-panel rounded-2xl px-5 py-4 text-sm text-slate-700 dark:text-slate-200">
+                <p class="text-xs uppercase tracking-wide text-emerald-600 dark:text-emerald-200">Favorite wins</p>
+                <p class="font-semibold text-slate-900 dark:text-white">Scaling SaaS to 2M+ requests / day</p>
+              </div>
             </div>
-        </section>
-
-        <section id="about" class="py-16 md:py-24">
-            <div class="fade-in-up max-w-5xl mx-auto space-y-12"> <div class="text-center max-w-3xl mx-auto">
-                    <h2 class="text-sm font-semibold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider">About Me</h2>
-                    <p class="text-3xl md:text-4xl font-bold tracking-tight mt-2">
-                        Crafting High-Performance Solutions with Laravel, React & AI
-                    </p>
-                    <p class="text-lg text-gray-600 dark:text-gray-300 mt-6 leading-relaxed">
-                        I'm a senior full-stack developer from India with over 8+ years of experience, specializing in building and scaling high-traffic web applications and APIs. I thrive in backend-heavy teams and my focus is on writing <strong>clean, secure, and maintainable code</strong> using best practices. I'm dedicated to delivering robust, user-centric solutions that scale with your vision.
-                    </p>
-                </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-
-    <div class="p-6 bg-white dark:bg-gray-900 rounded-xl shadow-lg border border-gray-200 dark:border-gray-800">
-        <div class="flex items-center gap-3 mb-5">
-            <svg class="h-7 w-7 text-indigo-600 dark:text-indigo-400 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6 20.25h12m-7.5-3v3m3-3v3m-10.125-3h17.25c.621 0 1.125-.504 1.125-1.125V4.875c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125Z" />
-            </svg>
-            <h3 class="text-2xl font-semibold text-gray-900 dark:text-white">Laravel & Backend Mastery</h3>
+          </div>
         </div>
-        <p class="text-gray-600 dark:text-gray-300 mb-4">Deep expertise in design patterns (Service & Repository) and architecting robust, service-based applications. My advanced skills include:</p>
-        <ul class="space-y-3 text-gray-600 dark:text-gray-300">
-            <li class="flex items-start gap-3">
-                <svg class="h-6 w-6 text-indigo-500 mt-1 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
-                <span class="flex-1"><strong>Asynchronous Tasks:</strong> Jobs, Queues, Schedulers, Task Batching, and Laravel Horizon.</span>
-            </li>
-            <li class="flex items-start gap-3">
-                <svg class="h-6 w-6 text-indigo-500 mt-1 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
-                <span class="flex-1"><strong>Real-time & Comms:</strong> Broadcasting (Pusher), Notifications, Events, Listeners, and Redis caching.</span>
-            </li>
-            <li class="flex items-start gap-3">
-                <svg class="h-6 w-6 text-indigo-500 mt-1 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
-                <span class="flex-1"><strong>Security & APIs:</strong> Sanctum, Policies, Gates, Form Requests, and custom Validation Rules.</span>
-            </li>
-            <li class="flex items-start gap-3">
-                <svg class="h-6 w-6 text-indigo-500 mt-1 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
-                <span class="flex-1"><strong>Core Architecture:</strong> Service Providers, Dependency Injection, Pipelines, and Eloquent (Relationships, Morphing).</span>
-            </li>
-        </ul>
-    </div>
+      </div>
+    </section>
 
-    <div class="p-6 bg-white dark:bg-gray-900 rounded-xl shadow-lg border border-gray-200 dark:border-gray-800">
-        <div class="flex items-center gap-3 mb-5">
-            <svg class="h-7 w-7 text-indigo-600 dark:text-indigo-400 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.52 122.523" fill="currentColor">
-    <path d="M8.708 61.26c0 20.802 12.089 38.779 29.619 47.298L13.258 39.872c-2.945 6.557-4.55 13.805-4.55 21.388zm96.74-3.08c0-6.495-2.333-10.993-4.334-14.494-2.664-4.329-5.161-7.995-5.161-12.324 0-4.831 3.664-9.328 8.825-9.328.233 0 .454.029.681.042-9.35-8.566-21.807-13.796-35.489-13.796-18.36 0-34.513 9.42-43.91 23.688 1.233.037 2.395.063 3.382.063 5.497 0 14.006-.667 14.006-.667 2.833-.167 3.167 3.994.337 4.329 0 0-2.847.335-6.015.501l19.138 56.925 11.501-34.493-8.188-22.434c-2.83-.166-5.511-.501-5.511-.501-2.832-.166-2.5-4.496.332-4.329 0 0 8.679.667 13.843.667 5.496 0 14.006-.667 14.006-.667 2.835-.167 3.168 3.994.337 4.329 0 0-2.853.335-6.015.501l18.992 56.494 5.242-17.517c2.272-7.269 4.001-12.49 4.001-16.989z"/>
-    <path d="M62.184 65.857l-15.768 45.819c4.708 1.384 9.687 2.141 14.846 2.141 6.12 0 11.989-1.058 17.452-2.979a4.503 4.503 0 01-.374-.724l-15.156-44.257zm43.156-27.334c.229 1.667.359 3.454.359 5.38 0 5.309-1.002 11.286-4.001 18.761l-16.072 46.485c15.631-9.127 26.16-26.076 26.16-45.426 0-9.165-2.344-17.788-6.446-25.2z"/>
-    <circle cx="61.262" cy="61.263" r="56.759" fill="none" stroke="currentColor" stroke-width="5"/>
-</svg>
-            <h3 class="text-2xl font-semibold text-gray-900 dark:text-white">WordPress & CMS Expertise</h3>
+    <!-- trusted brands -->
+    <section class="pb-20 reveal">
+      <div class="glass-panel rounded-2xl px-6 py-4 flex flex-wrap items-center justify-center gap-8 text-sm uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
+        Trusted by teams at Nandan Global &middot; Atarim &middot; Cyberize Group &middot; SPARK Business Works &middot; Isleberg Technology
+      </div>
+    </section>
+
+    <!-- about -->
+    <section id="about" class="pb-24 space-y-12">
+      <div class="reveal text-center max-w-3xl mx-auto">
+        <p class="text-sm font-semibold text-indigo-600 dark:text-indigo-300 uppercase tracking-[0.3em]">About me</p>
+        <h2 class="mt-4 text-4xl font-semibold text-slate-900 dark:text-white">Engineering calm, resilient experiences.</h2>
+        <p class="mt-6 text-lg text-slate-600 dark:text-slate-300">
+          I'm a senior full-stack developer from India focused on building scalable platforms with Laravel,
+          WordPress, React, and AI assistants. I obsess over clean architecture, observability, and DX so that teams can move quickly without breaking things.
+        </p>
+      </div>
+      <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <article class="glass-panel rounded-2xl p-6 space-y-4 reveal">
+          <div class="w-12 h-12 rounded-xl bg-indigo-50 dark:bg-indigo-500/20 border border-indigo-200 dark:border-indigo-400/30 grid place-items-center text-indigo-600 dark:text-indigo-200">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6v12m6-6H6"/></svg>
+          </div>
+          <h3 class="text-xl font-semibold text-slate-900 dark:text-white">Laravel & backend mastery</h3>
+          <p class="text-slate-600 dark:text-slate-300">
+            Service & repository patterns, Horizon, queues, broadcasting, Sanctum, policies, DI, Pipelines, and advanced Eloquent
+            relationships keep my APIs fast, predictable, and secure.
+          </p>
+        </article>
+        <article class="glass-panel rounded-2xl p-6 space-y-4 reveal delay-100">
+          <div class="w-12 h-12 rounded-xl bg-emerald-50 dark:bg-emerald-500/20 border border-emerald-200 dark:border-emerald-400/30 grid place-items-center text-emerald-600 dark:text-emerald-200">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/></svg>
+          </div>
+          <h3 class="text-xl font-semibold text-slate-900 dark:text-white">Full-stack execution</h3>
+          <p class="text-slate-600 dark:text-slate-300">
+            React/Vue micro frontends, custom WordPress plugins, design systems, and AI-infused UX that turn ambitious roadmaps into polished releases.
+          </p>
+        </article>
+        <article class="glass-panel rounded-2xl p-6 space-y-4 reveal delay-200">
+          <div class="w-12 h-12 rounded-xl bg-fuchsia-50 dark:bg-fuchsia-500/20 border border-fuchsia-200 dark:border-fuchsia-400/30 grid place-items-center text-fuchsia-600 dark:text-fuchsia-200">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17 7.5 14.75m0 0L5.25 17m2.25-2.25v-4.5M14.25 7 16.5 9.25m0 0L18.75 7m-2.25 2.25v4.5"/></svg>
+          </div>
+          <h3 class="text-xl font-semibold text-slate-900 dark:text-white">Automation & DevOps</h3>
+          <p class="text-slate-600 dark:text-slate-300">
+            Dockerized CI/CD, AWS, n8n automations, observability, and AI copilots that augment teams without sacrificing craft.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- experience -->
+    <section id="experience" class="pb-24">
+      <div class="reveal text-center max-w-2xl mx-auto mb-12">
+        <p class="text-sm font-semibold text-indigo-600 dark:text-indigo-300 uppercase tracking-[0.3em]">Experience</p>
+        <h2 class="mt-4 text-4xl font-semibold text-slate-900 dark:text-white">A decade of product partnerships.</h2>
+      </div>
+      <div class="relative">
+        <div class="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-white/10 -translate-x-1/2"></div>
+        <div class="space-y-10">
+          <!-- For each role -->
+          <article class="reveal group relative md:flex even:flex-row-reverse gap-10">
+            <div class="hidden md:block absolute left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-slate-900 border border-indigo-400 group-hover:bg-indigo-500"></div>
+            <div class="flex-1 glass-panel rounded-2xl p-6">
+              <p class="text-xs uppercase tracking-[0.3em] text-slate-500 dark:text-slate-400">07/2025 – Present</p>
+              <h3 class="mt-3 text-2xl font-semibold text-slate-900 dark:text-white">Senior Software Engineer &middot; Nandan Global (Remote)</h3>
+              <ul class="mt-4 space-y-2 text-slate-600 dark:text-slate-300 list-disc list-inside">
+                <li>Architected async job pipelines, schedulers, and Horizon dashboards powering critical ops.</li>
+                <li>Built bespoke Laravel & WordPress plugins plus AI-integrated Python tooling.</li>
+                <li>Managed Docker-based delivery, GitHub Actions, and cloud infra hardening.</li>
+              </ul>
+            </div>
+          </article>
+          <article class="reveal group relative md:flex even:flex-row-reverse gap-10">
+            <div class="hidden md:block absolute left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-slate-900 border border-indigo-400 group-hover:bg-indigo-500"></div>
+            <div class="flex-1 glass-panel rounded-2xl p-6">
+              <p class="text-xs uppercase tracking-[0.3em] text-slate-500 dark:text-slate-400">04/2021 – 07/2025</p>
+              <h3 class="mt-3 text-2xl font-semibold text-slate-900 dark:text-white">Senior WordPress & Laravel Developer &middot; Atarim</h3>
+              <ul class="mt-4 space-y-2 text-slate-600 dark:text-slate-300 list-disc list-inside">
+                <li>Led REST API design, plugin development, and cross-platform integrations.</li>
+                <li>Optimized MySQL + Eloquent queries, dropping load times substantially.</li>
+                <li>Shipped new React navigation systems for the flagship product.</li>
+              </ul>
+            </div>
+          </article>
+          <article class="reveal group relative md:flex even:flex-row-reverse gap-10">
+            <div class="hidden md:block absolute left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-slate-900 border border-indigo-400 group-hover:bg-indigo-500"></div>
+            <div class="flex-1 glass-panel rounded-2xl p-6">
+              <p class="text-xs uppercase tracking-[0.3em] text-slate-500 dark:text-slate-400">06/2019 – 07/2025</p>
+              <h3 class="mt-3 text-2xl font-semibold text-slate-900 dark:text-white">WordPress Specialist &middot; Cyberize Group</h3>
+              <ul class="mt-4 space-y-2 text-slate-600 dark:text-slate-300 list-disc list-inside">
+                <li>Maintained 20+ high-converting marketing sites with Thrive & Elementor.</li>
+                <li>Configured complex stacks (Learndash, ACF, WP Rocket) for growth teams.</li>
+              </ul>
+            </div>
+          </article>
+          <article class="reveal group relative md:flex even:flex-row-reverse gap-10">
+            <div class="hidden md:block absolute left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-slate-900 border border-indigo-400 group-hover:bg-indigo-500"></div>
+            <div class="flex-1 glass-panel rounded-2xl p-6">
+              <p class="text-xs uppercase tracking-[0.3em] text-slate-500 dark:text-slate-400">08/2018 – 07/2025</p>
+              <h3 class="mt-3 text-2xl font-semibold text-slate-900 dark:text-white">Laravel Developer &middot; SPARK Business Works</h3>
+              <ul class="mt-4 space-y-2 text-slate-600 dark:text-slate-300 list-disc list-inside">
+                <li>Delivered multi-tenant SaaS platforms with billing, exports, and analytics.</li>
+                <li>Rescued legacy codebases through refactors and observability upgrades.</li>
+              </ul>
+            </div>
+          </article>
+          <article class="reveal group relative md:flex even:flex-row-reverse gap-10">
+            <div class="hidden md:block absolute left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-slate-900 border border-indigo-400 group-hover:bg-indigo-500"></div>
+            <div class="flex-1 glass-panel rounded-2xl p-6">
+              <p class="text-xs uppercase tracking-[0.3em] text-slate-500 dark:text-slate-400">06/2013 – 07/2025</p>
+              <h3 class="mt-3 text-2xl font-semibold text-slate-900 dark:text-white">PHP Developer &middot; ISLEBERG Technology</h3>
+              <ul class="mt-4 space-y-2 text-slate-600 dark:text-slate-300 list-disc list-inside">
+                <li>Launched bespoke e-commerce solutions on OpenCart.</li>
+                <li>Created custom DiVi themes and automation-ready WordPress plugins.</li>
+              </ul>
+            </div>
+          </article>
         </div>
-        <p class="text-gray-600 dark:text-gray-300 mb-4">I build more than just sites; I build solutions. From custom themes to complex e-commerce platforms, I can handle any WordPress challenge:</p>
-        <ul class="space-y-3 text-gray-600 dark:text-gray-300">
-            <li class="flex items-start gap-3">
-                <svg class="h-6 w-6 text-indigo-500 mt-1 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
-                <span class="flex-1"><strong>Custom Development:</strong> Building bespoke plugins and themes from scratch to meet exact client needs.</span>
-            </li>
-            <li class="flex items-start gap-3">
-                <svg class="h-6 w-6 text-indigo-500 mt-1 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
-                <span class="flex-1"><strong>Page Builders:</strong> Full mastery of Elementor, Divi, and Thrive for rapid and responsive design.</span>
-            </li>
-            <li class="flex items-start gap-3">
-                <svg class="h-6 w-6 text-indigo-500 mt-1 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
-                <span class="flex-1"><strong>E-Commerce:</strong> Developing complete WooCommerce solutions and custom payment integrations.</span>
-            </li>
-            <li class="flex items-start gap-3">
-                <svg class="h-6 w-6 text-indigo-500 mt-1 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
-                <span class="flex-1"><strong>Plugin Extension:</strong> Extending functionality in major plugins like Yoast SEO and advanced custom fields.</span>
-            </li>
-        </ul>
-    </div>
-    <div class="p-6 bg-white dark:bg-gray-900 rounded-xl shadow-lg border border-gray-200 dark:border-gray-800">
-        <div class="flex items-center gap-3 mb-5">
-            <svg class="h-7 w-7 text-indigo-600 dark:text-indigo-400 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 7.5l3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0 0 21 18V6a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6v12a2.25 2.25 0 0 0 2.25 2.25Z" />
-            </svg>
-            <h3 class="text-2xl font-semibold text-gray-900 dark:text-white">Full-Stack Versatility</h3>
+      </div>
+    </section>
+
+    <!-- skills -->
+    <section id="skills" class="pb-24 space-y-12">
+      <div class="reveal text-center max-w-2xl mx-auto">
+        <p class="text-sm font-semibold text-indigo-600 dark:text-indigo-300 uppercase tracking-[0.3em]">Skills</p>
+        <h2 class="mt-4 text-4xl font-semibold text-slate-900 dark:text-white">Tooling I rely on every day.</h2>
+      </div>
+      <div class="grid gap-8 md:grid-cols-3">
+        <article class="glass-panel rounded-2xl p-6 space-y-4 reveal">
+          <h3 class="text-xl font-semibold text-slate-900 dark:text-white">Backend & CMS</h3>
+          <div class="space-y-3">
+            <div>
+              <div class="flex justify-between text-xs text-slate-500 dark:text-slate-400"><span>Laravel &amp; PHP</span><span>95%</span></div>
+              <div class="h-2 bg-slate-200 dark:bg-white/10 rounded-full overflow-hidden"><span class="block h-full bg-gradient-to-r from-indigo-500 to-purple-500" style="width:95%"></span></div>
+            </div>
+            <div>
+              <div class="flex justify-between text-xs text-slate-500 dark:text-slate-400"><span>WordPress</span><span>92%</span></div>
+              <div class="h-2 bg-slate-200 dark:bg-white/10 rounded-full overflow-hidden"><span class="block h-full bg-gradient-to-r from-indigo-500 to-purple-500" style="width:92%"></span></div>
+            </div>
+            <div class="flex flex-wrap gap-2 pt-2 text-sm">
+              <span class="chip px-4 py-1.5 rounded-full">Python</span>
+              <span class="chip px-4 py-1.5 rounded-full">FastAPI</span>
+              <span class="chip px-4 py-1.5 rounded-full">Node.js</span>
+              <span class="chip px-4 py-1.5 rounded-full">MySQL</span>
+              <span class="chip px-4 py-1.5 rounded-full">MongoDB</span>
+            </div>
+          </div>
+        </article>
+        <article class="glass-panel rounded-2xl p-6 space-y-4 reveal delay-100">
+          <h3 class="text-xl font-semibold text-slate-900 dark:text-white">Frontend</h3>
+          <div class="space-y-3">
+            <div>
+              <div class="flex justify-between text-xs text-slate-500 dark:text-slate-400"><span>React &amp; Vue &amp; Next.js</span><span>88%</span></div>
+              <div class="h-2 bg-slate-200 dark:bg-white/10 rounded-full overflow-hidden"><span class="block h-full bg-gradient-to-r from-indigo-500 to-purple-500" style="width:88%"></span></div>
+            </div>
+            <div>
+              <div class="flex justify-between text-xs text-slate-500 dark:text-slate-400"><span>Tailwind / Design Systems</span><span>90%</span></div>
+              <div class="h-2 bg-slate-200 dark:bg-white/10 rounded-full overflow-hidden"><span class="block h-full bg-gradient-to-r from-indigo-500 to-purple-500" style="width:90%"></span></div>
+            </div>
+            <div class="flex flex-wrap gap-2 pt-2 text-sm">
+              <span class="chip px-4 py-1.5 rounded-full">TypeScript</span>
+              <span class="chip px-4 py-1.5 rounded-full">Next.js</span>
+              <span class="chip px-4 py-1.5 rounded-full">Tailwind</span>
+              <span class="chip px-4 py-1.5 rounded-full">Accessibility</span>
+            </div>
+          </div>
+        </article>
+        <article class="glass-panel rounded-2xl p-6 space-y-4 reveal delay-200">
+          <h3 class="text-xl font-semibold text-slate-900 dark:text-white">DevOps, AI & Ops</h3>
+          <div class="space-y-3">
+            <div>
+              <div class="flex justify-between text-xs text-slate-500 dark:text-slate-400"><span>Automation &amp; n8n</span><span>85%</span></div>
+              <div class="h-2 bg-slate-200 dark:bg-white/10 rounded-full overflow-hidden"><span class="block h-full bg-gradient-to-r from-indigo-500 to-purple-500" style="width:85%"></span></div>
+            </div>
+            <div>
+              <div class="flex justify-between text-xs text-slate-500 dark:text-slate-400"><span>AWS / Docker / CI</span><span>82%</span></div>
+              <div class="h-2 bg-slate-200 dark:bg-white/10 rounded-full overflow-hidden"><span class="block h-full bg-gradient-to-r from-indigo-500 to-purple-500" style="width:82%"></span></div>
+            </div>
+            <div class="flex flex-wrap gap-2 pt-2 text-sm">
+              <span class="chip px-4 py-1.5 rounded-full">Generative AI</span>
+              <span class="chip px-4 py-1.5 rounded-full">Prompt Eng.</span>
+              <span class="chip px-4 py-1.5 rounded-full">Horizon</span>
+              <span class="chip px-4 py-1.5 rounded-full">CI/CD</span>
+              <span class="chip px-4 py-1.5 rounded-full">Monitoring</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- education -->
+    <section id="education" class="pb-24">
+      <div class="glass-panel rounded-3xl p-8 md:p-10 text-center reveal">
+        <p class="text-sm font-semibold text-indigo-600 dark:text-indigo-300 uppercase tracking-[0.3em]">Education</p>
+        <h3 class="mt-4 text-2xl md:text-3xl font-semibold text-slate-900 dark:text-white">Bachelor of Computer Applications</h3>
+        <p class="mt-2 text-lg text-slate-600 dark:text-slate-300">Burdwan Institute of Management & Computer Science</p>
+        <p class="mt-4 text-sm uppercase tracking-[0.25em] text-slate-500 dark:text-slate-400">Graduated &middot; 05/2011</p>
+      </div>
+    </section>
+
+    <!-- contact -->
+    <section id="contact" class="pb-24">
+      <div class="reveal text-center max-w-2xl mx-auto mb-12">
+        <p class="text-sm font-semibold text-indigo-600 dark:text-indigo-300 uppercase tracking-[0.3em]">Contact</p>
+        <h2 class="mt-4 text-4xl font-semibold text-slate-900 dark:text-white">Let's build your next bold release.</h2>
+        <p class="mt-4 text-lg text-slate-600 dark:text-slate-300">
+          New product idea? Technical leadership gap? I can help architect, implement, and scale with clarity.
+        </p>
+      </div>
+
+      <div class="grid gap-8 lg:grid-cols-2">
+        <div class="glass-panel rounded-3xl p-8 space-y-6">
+          <h3 class="text-2xl font-semibold text-slate-900 dark:text-white">Direct line</h3>
+          <p class="text-slate-600 dark:text-slate-300">Reach out for consulting, partnerships, or long-term engagements.</p>
+          <div class="space-y-4 text-sm">
+            <a href="mailto:professional.sourav@gmail.com" class="flex items-center gap-3 px-4 py-3 rounded-2xl border border-black/10 dark:border-white/15 text-slate-700 dark:text-slate-200 hover:bg-black/5 dark:hover:bg-white/10">
+              <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M3 8l9 6 9-6M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+              professional.sourav@gmail.com
+            </a>
+            <a href="tel:+919748940238" class="flex items-center gap-3 px-4 py-3 rounded-2xl border border-black/10 dark:border-white/15 text-slate-700 dark:text-slate-200 hover:bg-black/5 dark:hover:bg-white/10">
+              <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M3 5a2 2 0 012-2h3.5l1.5 4.5-2.5 1.2a11 11 0 005.3 5.3l1.2-2.5 4.5 1.5V19a2 2 0 01-2 2H18C9.716 21 3 14.284 3 6V5z"/></svg>
+              +91 97489 40238
+            </a>
+          </div>
+          <div class="pt-4 text-sm text-slate-500 dark:text-slate-400 space-y-1">
+            <p>Timezone &middot; India Standard Time (GMT+5:30)</p>
+            <p>Preferred &middot; Remote-friendly / async collabs</p>
+          </div>
         </div>
-        <p class="text-gray-600 dark:text-gray-300 mb-4">I bridge the gap between backend logic and frontend experience. My preferred styling tool is <strong>Tailwind CSS</strong> for its clean, utility-first approach.</p>
-        <ul class="space-y-3 text-gray-600 dark:text-gray-300">
-            <li class="flex items-start gap-3">
-                <svg class="h-6 w-6 text-indigo-500 mt-1 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
-                <span class="flex-1"><strong>Frontend:</strong> Building interactive UIs with <strong>React.js</strong>, <strong>Vanilla JS</strong>, and <strong>jQuery</strong>.</span>
-            </li>
-            <li class="flex items-start gap-3">
-                <svg class="h-6 w-6 text-indigo-500 mt-1 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
-                <span class="flex-1"><strong>Polyglot Scripting:</strong> Using <strong>Python</strong> (FastAPI) and <strong>Node.js</strong> for data handling and microservices.</span>
-            </li>
-            <li class="flex items-start gap-3">
-                <svg class="h-6 w-6 text-indigo-500 mt-1 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
-                <span class="flex-1"><strong>API Integration:</strong> Connecting to third-party services like Twilio, MailGun, SendGrid, Shopify, and Zoho.</span>
-            </li>
-            <li class="flex items-start gap-3">
-                <svg class="h-6 w-6 text-indigo-500 mt-1 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
-                <span class="flex-1"><strong>Problem Solving:</strong> Solving complex challenges like X-Frame security, and web scraping (ScrapeBee).</span>
-            </li>
-        </ul>
-    </div>
 
-    <div class="p-6 bg-white dark:bg-gray-900 rounded-xl shadow-lg border border-gray-200 dark:border-gray-800">
-        <div class="flex items-center gap-3 mb-5">
-            <svg class="h-7 w-7 text-indigo-600 dark:text-indigo-400 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5V9.75m0 0 3 3m-3-3-3 3M6.75 19.5a4.5 4.5 0 0 1-1.41-8.775 5.25 5.25 0 0 1 10.233-2.33 3 3 0 0 1 3.758 3.848A3.752 3.752 0 0 1 18 19.5H6.75Z" />
-            </svg>
-            <h3 class="text-2xl font-semibold text-gray-900 dark:text-white">DevOps & Cloud</h3>
-        </div>
-        <p class="text-gray-600 dark:text-gray-300 mb-4">I ensure applications are deployed efficiently and scalably. I'm proficient in managing cloud infrastructure on <strong>AWS</strong> and automating workflows.</p>
-        <ul class="space-y-3 text-gray-600 dark:text-gray-300">
-            <li class="flex items-start gap-3">
-                <svg class="h-6 w-6 text-indigo-500 mt-1 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
-                <span class="flex-1"><strong>Automation:</strong> Building CI/CD pipelines with <strong>GitHub Actions</strong> and containerizing apps with <strong>Docker</strong>.</span>
-            </li>
-            <li class="flex items-start gap-3">
-                <svg class="h-6 w-6 text-indigo-500 mt-1 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
-                <span class="flex-1"><strong>Compute & Containers:</strong> Managing <strong>EC2</strong> instances, creating <strong>AMIs</strong>, and orchestrating with <strong>ECS</strong> & <strong>Lambda</strong>.</span>
-            </li>
-            <li class="flex items-start gap-3">
-                <svg class="h-6 w-6 text-indigo-500 mt-1 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
-                <span class="flex-1"><strong>Storage & Database:</strong> Configuring <strong>S3</strong> for storage and managing secure <strong>RDS</strong> databases within a <strong>VPC</strong>.</span>
-            </li>
-            <li class="flex items-start gap-3">
-                <svg class="h-6 w-6 text-indigo-500 mt-1 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
-                <span class="flex-1"><strong>Networking:</strong> Setting up <strong>VPCs</strong> and distributing traffic with <strong>Application Load Balancers (ALB)</strong>.</span>
-            </li>
-        </ul>
-    </div>
-
-</div>
-            </div>
-        </section>
-
-        <section id="experience" class="py-16 md:py-24">
-            <div class="fade-in-up text-center mb-12">
-                <h2 class="text-sm font-semibold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider">Experience</h2>
-                <p class="text-3xl md:text-4xl font-bold tracking-tight mt-2">
-                    My Professional Journey
-                </p>
-            </div>
-            
-            <div class="relative max-w-3xl mx-auto">
-                <div class="absolute left-1/2 top-0 bottom-0 w-0.5 bg-gray-200 dark:bg-gray-700 hidden md:block" style="transform: translateX(-50%);"></div>
-
-                <div class="fade-in-up group relative flex md:items-center md:even:flex-row-reverse mb-12">
-                    <div class="hidden md:block absolute left-1/2 top-1/2 w-4 h-4 bg-gray-200 dark:bg-gray-700 rounded-full border-4 border-white dark:border-gray-950 -translate-x-1/2 -translate-y-1/2 group-hover:bg-indigo-500 transition-colors"></div>
-                    
-                    <div class="w-full md:w-[calc(50%-2rem)] p-6 bg-white dark:bg-gray-900 rounded-xl shadow-lg border border-gray-200 dark:border-gray-800 md:group-even:ml-auto">
-                        <p class="text-sm text-gray-500 dark:text-gray-400">07/2025 – Present</p>
-                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mt-1">Senior Software Engineer</h3>
-                        <p class="font-medium text-indigo-600 dark:text-indigo-400">Nandan Global (Remote)</p>
-                        <ul class="mt-4 list-disc list-inside text-gray-600 dark:text-gray-300 space-y-2">
-                            <li>Engineered and optimized Laravel Jobs, Queues, and Schedules.</li>
-                            <li>Developed custom Laravel and WordPress plugins.</li>
-                            <li>Created Python scripts for AI model integration and web scraping.</li>
-                            <li>Managed cloud infrastructure and CI/CD pipelines (Docker, GitHub Actions).</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="fade-in-up group relative flex md:items-center md:even:flex-row-reverse mb-12">
-                    <div class="hidden md:block absolute left-1/2 top-1/2 w-4 h-4 bg-gray-200 dark:bg-gray-700 rounded-full border-4 border-white dark:border-gray-950 -translate-x-1/2 -translate-y-1/2 group-hover:bg-indigo-500 transition-colors"></div>
-                    
-                    <div class="w-full md:w-[calc(50%-2rem)] p-6 bg-white dark:bg-gray-900 rounded-xl shadow-lg border border-gray-200 dark:border-gray-800 md:group-even:ml-auto">
-                        <p class="text-sm text-gray-500 dark:text-gray-400">04/2021 – 07/2025</p>
-                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mt-1">Senior WordPress & Laravel Developer</h3>
-                        <p class="font-medium text-indigo-600 dark:text-indigo-400">Atarim (Remote)</p>
-                        <ul class="mt-4 list-disc list-inside text-gray-600 dark:text-gray-300 space-y-2">
-                            <li>Led backend development in Laravel, architecting RESTful APIs.</li>
-                            <li>Engineered new WordPress plugin features and integrated third-party APIs.</li>
-                            <li>Optimized MySQL schema and Eloquent queries, reducing page load times.</li>
-                            <li>Developed and deployed new React.js navigation components.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="fade-in-up group relative flex md:items-center md:even:flex-row-reverse mb-12">
-                    <div class="hidden md:block absolute left-1/2 top-1/2 w-4 h-4 bg-gray-200 dark:bg-gray-700 rounded-full border-4 border-white dark:border-gray-950 -translate-x-1/2 -translate-y-1/2 group-hover:bg-indigo-500 transition-colors"></div>
-                    
-                    <div class="w-full md:w-[calc(50%-2rem)] p-6 bg-white dark:bg-gray-900 rounded-xl shadow-lg border border-gray-200 dark:border-gray-800 md:group-even:ml-auto">
-                        <p class="text-sm text-gray-500 dark:text-gray-400">06/2019 – 07/2025</p>
-                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mt-1">Experienced WordPress Developer</h3>
-                        <p class="font-medium text-indigo-600 dark:text-indigo-400">Cyberize Group (Remote)</p>
-                        <ul class="mt-4 list-disc list-inside text-gray-600 dark:text-gray-300 space-y-2">
-                            <li>Managed and maintained 20+ WordPress websites.</li>
-                            <li>Designed custom sites using Thrive Theme and Elementor.</li>
-                            <li>Configured advanced plugins like Learndash, WP Rocket, and ACF.</li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <div class="fade-in-up group relative flex md:items-center md:even:flex-row-reverse mb-12">
-                    <div class="hidden md:block absolute left-1/2 top-1/2 w-4 h-4 bg-gray-200 dark:bg-gray-700 rounded-full border-4 border-white dark:border-gray-950 -translate-x-1/2 -translate-y-1/2 group-hover:bg-indigo-500 transition-colors"></div>
-                    
-                    <div class="w-full md:w-[calc(50%-2rem)] p-6 bg-white dark:bg-gray-900 rounded-xl shadow-lg border border-gray-200 dark:border-gray-800 md:group-even:ml-auto">
-                        <p class="text-sm text-gray-500 dark:text-gray-400">08/2018 – 07/2025</p>
-                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mt-1">Laravel Developer</h3>
-                        <p class="font-medium text-indigo-600 dark:text-indigo-400">SPARK Business Works (Remote)</p>
-                        <ul class="mt-4 list-disc list-inside text-gray-600 dark:text-gray-300 space-y-2">
-                            <li>Developed custom SaaS applications in Laravel with multi-tenant architecture.</li>
-                            <li>Refactored and optimized legacy Laravel codebases.</li>
-                            <li>Implemented automated Excel export functionality.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="fade-in-up group relative flex md:items-center md:even:flex-row-reverse">
-                    <div class="hidden md:block absolute left-1/2 top-1/2 w-4 h-4 bg-gray-200 dark:bg-gray-700 rounded-full border-4 border-white dark:border-gray-950 -translate-x-1/2 -translate-y-1/2 group-hover:bg-indigo-500 transition-colors"></div>
-                    
-                    <div class="w-full md:w-[calc(50%-2rem)] p-6 bg-white dark:bg-gray-900 rounded-xl shadow-lg border border-gray-200 dark:border-gray-800 md:group-even:ml-auto">
-                        <p class="text-sm text-gray-500 dark:text-gray-400">06/2013 – 07/2025</p>
-                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mt-1">PHP Developer</h3>
-                        <p class="font-medium text-indigo-600 dark:text-indigo-400">ISLEBERG Technology Pvt. Ltd. (WB)</p>
-                        <ul class="mt-4 list-disc list-inside text-gray-600 dark:text-gray-300 space-y-2">
-                            <li>Developed OpenCart-based e-commerce websites.</li>
-                            <li>Designed and implemented custom WordPress themes (DiVi).</li>
-                            <li>Engineered custom WordPress plugins to automate workflows.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="skills" class="py-16 md:py-24">
-            <div class="fade-in-up text-center mb-12">
-                <h2 class="text-sm font-semibold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider">Skills</h2>
-                <p class="text-3xl md:text-4xl font-bold tracking-tight mt-2">
-                    My Technical Toolkit
-                </p>
-            </div>
-
-            <div class="fade-in-up max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="p-6 bg-white dark:bg-gray-900 rounded-xl shadow-lg border border-gray-200 dark:border-gray-800">
-                    <h3 class="text-xl font-semibold mb-4 text-indigo-600 dark:text-indigo-400">Backend & CMS</h3>
-                    <div class="flex flex-wrap gap-3">
-                        <span class="skill-badge">PHP</span>
-                        <span class="skill-badge">Laravel</span>
-                        <span class="skill-badge">WordPress</span>
-                        <span class="skill-badge">Python</span>
-                        <span class="skill-badge">Node.js</span>
-                        <span class="skill-badge">MySQL</span>
-                        <span class="skill-badge">MongoDB</span>
-                        <span class="skill-badge">FastAPI</span>
-                    </div>
-                </div>
-                
-                <div class="p-6 bg-white dark:bg-gray-900 rounded-xl shadow-lg border border-gray-200 dark:border-gray-800">
-                    <h3 class="text-xl font-semibold mb-4 text-indigo-600 dark:text-indigo-400">Frontend</h3>
-                    <div class="flex flex-wrap gap-3">
-                        <span class="skill-badge">Javascript</span>
-                        <span class="skill-badge">React.js</span>
-                        <span class="skill-badge">Vue.js</span>
-                        <span class="skill-badge">HTML5</span>
-                        <span class="skill-badge">Tailwind CSS</span>
-                        <span class="skill-badge">Jquery</span>
-                    </div>
-                </div>
-
-                <div class="p-6 bg-white dark:bg-gray-900 rounded-xl shadow-lg border border-gray-200 dark:border-gray-800">
-                    <h3 class="text-xl font-semibold mb-4 text-indigo-600 dark:text-indigo-400">DevOps, AI & Other</h3>
-                    <div class="flex flex-wrap gap-3">
-                        <span class="skill-badge">AWS</span>
-                        <span class="skill-badge">CI/CD</span>
-                        <span class="skill-badge">Docker</span>
-                        <span class="skill-badge">Generative AI</span>
-                        <span class="skill-badge">n8n</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <section id="education" class="py-16 md:py-24">
-            <div class="fade-in-up text-center mb-12">
-                <h2 class="text-sm font-semibold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider">Education</h2>
-                <p class="text-3xl md:text-4xl font-bold tracking-tight mt-2">
-                    My Foundation
-                </p>
-            </div>
-            
-             <div class="fade-in-up max-w-lg mx-auto p-6 bg-white dark:bg-gray-900 rounded-xl shadow-lg border border-gray-200 dark:border-gray-800 text-center">
-                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Bachelor of Computer Applications (BCA)</h3>
-                <p class="font-medium text-indigo-600 dark:text-indigo-400 mt-1">Burdwan Institute of management and Computer Science</p>
-                <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">Graduated: 05/2011</p>
-             </div>
-        </section>
-
-        <section id="contact" class="py-16 md:py-24">
-            <div class="fade-in-up max-w-xl mx-auto text-center space-y-6">
-                <h2 class="text-sm font-semibold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider">Contact</h2>
-                <p class="text-3xl md:text-4xl font-bold tracking-tight">
-                    Let's Build Something Great
-                </p>
-                <p class="text-lg text-gray-600 dark:text-gray-300">
-                    I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision. Feel free to reach out.
-                </p>
-
-                <div class="fade-in-up text-left mt-8 p-6 bg-white dark:bg-gray-900 rounded-xl shadow-lg border border-gray-200 dark:border-gray-800">
-                    <label for="project-idea-input" class="block text-base font-medium text-gray-800 dark:text-gray-200 mb-2">Have a project in mind? Let AI help you draft an inquiry:</label>
-                    <input type="text" id="project-idea-input" placeholder="e.g., 'A new e-commerce site for pet supplies'" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                    <button id="draft-inquiry-btn" class="w-full mt-4 px-6 py-3 bg-gray-700 text-white font-medium rounded-lg shadow-md hover:bg-gray-800 dark:bg-gray-700 dark:hover:bg-gray-600 transition-all duration-300 inline-flex items-center justify-center gap-2">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m11-7l-1-1-1 1m-2 0l-1-1-1 1m6 0l-1-1-1 1M13 3l-1 1-1-1m-2 0l-1 1-1-1m6 0l-1 1-1-1"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m11-7l-1-1-1 1m-2 0l-1-1-1 1m6 0l-1-1-1 1M13 3l-1 1-1-1m-2 0l-1 1-1-1m6 0l-1 1-1-1z"></path></svg>
-                        ✨ Help Me Draft an Inquiry
-                    </button>
-                    <p id="inquiry-error" class="text-red-500 text-sm mt-2 hidden">Please enter a project idea first.</p>
-                </div>
-
-                <div class="flex flex-col sm:flex-row justify-center items-center gap-4 pt-8">
-                    <a href="mailto:professional.sourav@gmail.com" class="w-full sm:w-auto px-8 py-3 bg-indigo-600 text-white font-medium rounded-lg shadow-lg hover:bg-indigo-700 transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                        Email Me
-                    </a>
-                    <a href="tel:+919748940238" class="w-full sm:w-auto px-8 py-3 bg-gray-200 text-gray-800 dark:bg-gray-800 dark:text-gray-200 font-medium rounded-lg shadow-lg hover:bg-gray-300 dark:hover:bg-gray-700 transition-all duration-300 flex items-center justify-center gap-2">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
-                        Call Me
-                    </a>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <div id="gemini-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75 p-4 hidden">
-        <div class="relative w-full max-w-2xl bg-white dark:bg-gray-900 rounded-xl shadow-2xl p-6 md:p-8 transform transition-all scale-95 opacity-0" id="modal-panel">
-            
-            <button id="modal-close-btn" class="absolute top-4 right-4 p-2 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        <div class="glass-panel rounded-3xl p-8 space-y-6">
+          <div>
+            <h3 class="text-2xl font-semibold text-slate-900 dark:text-white">Need help phrasing your inquiry?</h3>
+            <p class="mt-2 text-slate-600 dark:text-slate-300">Describe your idea and let AI draft a polished intro email for you.</p>
+          </div>
+          <div class="space-y-4">
+            <label for="project-idea-input" class="text-sm font-medium text-slate-700 dark:text-slate-200">Project idea</label>
+            <input id="project-idea-input" type="text" placeholder="e.g. AI-powered knowledge portal for fintech support"
+                   class="w-full rounded-2xl border border-black/10 dark:border-white/15 bg-white/90 dark:bg-white/5 px-4 py-3 text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-indigo-400 focus:outline-none" />
+            <button id="draft-inquiry-btn" class="w-full rounded-2xl px-6 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 font-semibold shadow-glow flex items-center justify-center gap-2">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 12h14M12 5l7 7-7 7"/></svg>
+              Draft inquiry
             </button>
-
-            <h3 id="modal-title" class="text-2xl font-bold text-gray-900 dark:text-white mb-4"></h3>
-            
-            <div id="modal-spinner" class="text-center py-12 hidden">
-                <svg class="animate-spin h-10 w-10 text-indigo-600 dark:text-indigo-400 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                <p class="mt-4 text-gray-600 dark:text-gray-300">Generating with Gemini...</p>
-            </div>
-
-            <div id="modal-content" class="text-gray-700 dark:text-gray-300 prose prose-lg dark:prose-invert max-w-none">
-                </div>
+            <p id="inquiry-error" class="hidden text-sm text-rose-400">Please describe your project before drafting.</p>
+          </div>
         </div>
+      </div>
+    </section>
+  </main>
+
+    <footer class="border-t border-black/5 dark:border-white/5">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-10 text-sm text-slate-500 dark:text-slate-400 flex flex-col md:flex-row items-center justify-between gap-4">
+      <p>&copy; <span id="year"></span> Sourav Chakraborty. All rights reserved.</p>
+      <div class="flex items-center gap-4">
+        <a href="#home" class="hover:text-slate-900 dark:hover:text-white">Back to top</a>
+        <span class="text-slate-400 dark:text-white/30">&bull;</span>
+        <span>Based in India &middot; Working globally</span>
+      </div>
     </div>
-    
-    <footer class="border-t border-gray-200 dark:border-gray-800">
-        <div class="container mx-auto max-w-6xl px-4 py-8 text-center text-sm text-gray-500 dark:text-gray-400">
-            &copy; 2025 Sourav Chakraborty. All rights reserved.
+  </footer>
+
+  <button id="scrollTopBtn" class="fixed right-6 z-40 bg-white text-slate-900 dark:bg-slate-800 dark:text-white rounded-full p-3 shadow-lg">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 11l7-7 7 7M12 4v16"/></svg>
+  </button>
+
+  <!-- modal -->
+  <div id="gemini-modal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center px-4">
+    <div id="modal-panel" class="w-full max-w-2xl bg-white dark:bg-slate-900 rounded-3xl border border-black/10 dark:border-white/10 p-6 scale-95 opacity-0 transition">
+      <div class="flex items-start justify-between text-slate-900 dark:text-white">
+        <div>
+          <h3 id="modal-title" class="text-2xl font-semibold"></h3>
+          <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Powered by Gemini &middot; Draft before you send.</p>
         </div>
-    </footer>
+        <button id="modal-close-btn" class="p-2 rounded-full border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/10">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div id="modal-spinner" class="mt-6 hidden">
+        <p class="text-slate-600 dark:text-slate-300">Generating...</p>
+      </div>
+      <div id="modal-content" class="mt-6 space-y-4 text-slate-700 dark:text-slate-200"></div>
+    </div>
+  </div>
 
-    <button id="scrollTopBtn" class="p-3 bg-indigo-600 text-white rounded-full shadow-lg hover:bg-indigo-700 transition-all duration-300 transform hover:scale-110">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
-    </button>
+  <script>
+    const htmlEl = document.documentElement;
+    const iconSunEl = document.getElementById('icon-sun');
+    const iconMoonEl = document.getElementById('icon-moon');
+    const setThemeIcons = () => {
+      if (!iconSunEl || !iconMoonEl) return;
+      const isDark = htmlEl.classList.contains('dark');
+      iconSunEl.classList.toggle('hidden', !isDark);
+      iconMoonEl.classList.toggle('hidden', isDark);
+    };
 
+    const toggleTheme = () => {
+      const isDark = htmlEl.classList.toggle('dark');
+      localStorage.theme = isDark ? 'dark' : 'light';
+      setThemeIcons();
+    };
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            
-            // --- Theme Toggle Logic ---
-            const themeToggleBtn = document.getElementById('theme-toggle');
-            const themeToggleMobileBtn = document.getElementById('theme-toggle-mobile');
+    document.addEventListener('DOMContentLoaded', () => {
+      setThemeIcons();
+      const desktopThemeBtn = document.getElementById('theme-toggle');
+      const mobileThemeBtn = document.getElementById('theme-toggle-mobile');
+      if (desktopThemeBtn) desktopThemeBtn.addEventListener('click', toggleTheme);
+      if (mobileThemeBtn) mobileThemeBtn.addEventListener('click', toggleTheme);
 
-            function toggleTheme() {
-                const isDark = document.documentElement.classList.toggle('dark');
-                localStorage.theme = isDark ? 'dark' : 'light';
-            }
+      const mobileToggle = document.getElementById('mobile-toggle');
+      const mobileMenu = document.getElementById('mobile-menu');
+      if (mobileToggle && mobileMenu) {
+        mobileToggle.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+      }
 
-            if (themeToggleBtn) {
-                themeToggleBtn.addEventListener('click', toggleTheme);
-            }
-            
-            if (themeToggleMobileBtn) {
-                themeToggleMobileBtn.addEventListener('click', toggleTheme);
-            }
-            
-            // No need for updateThemeIcons() call, Tailwind handles it.
-            
-            // --- Mobile Menu Logic ---
-            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-            const mobileMenuCloseBtn = document.getElementById('mobile-menu-close-btn');
-            const mobileMenu = document.getElementById('mobile-menu');
-            const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
-
-            function openMenu() {
-                mobileMenu.classList.add('open');
-                document.body.style.overflow = 'hidden'; // Prevent scrolling
-            }
-
-            function closeMenu() {
-                mobileMenu.classList.remove('open');
-                document.body.style.overflow = ''; // Restore scrolling
-            }
-
-            mobileMenuBtn.addEventListener('click', openMenu);
-            mobileMenuCloseBtn.addEventListener('click', closeMenu);
-            // Close menu when a link is clicked
-            mobileNavLinks.forEach(link => {
-                link.addEventListener('click', closeMenu);
-            });
-
-
-            // --- Fade-in on Scroll Animation Logic ---
-            const fadeElements = document.querySelectorAll('.fade-in-up');
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('is-visible');
-                        observer.unobserve(entry.target); // Optional: only animate once
-                    }
-                });
-            }, {
-                threshold: 0.1 // Trigger when 10% of the element is visible
-            });
-
-            fadeElements.forEach(el => {
-                observer.observe(el);
-            });
-
-
-            // --- Scroll-to-Top Button Logic ---
-            const scrollTopBtn = document.getElementById('scrollTopBtn');
-            
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 300) {
-                    scrollTopBtn.classList.add('show');
-                } else {
-                    scrollTopBtn.classList.remove('show');
-                }
-            });
-
-            scrollTopBtn.addEventListener('click', () => {
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
-            });
-
-            // --- Apply styles to skill badges dynamically ---
-            const skillBadges = document.querySelectorAll('.skill-badge');
-            skillBadges.forEach(badge => {
-                badge.className += ' px-4 py-2 bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200 rounded-full font-medium text-sm transition-all duration-300 transform hover:scale-105';
-            });
-
-            // --- ✨ Gemini API Feature Logic ---
-
-            const modal = document.getElementById('gemini-modal');
-            const modalPanel = document.getElementById('modal-panel');
-            const modalCloseBtn = document.getElementById('modal-close-btn');
-            const modalTitle = document.getElementById('modal-title');
-            const modalSpinner = document.getElementById('modal-spinner');
-            const modalContent = document.getElementById('modal-content');
-
-            // Removed generateIdeasBtn
-            const draftInquiryBtn = document.getElementById('draft-inquiry-btn');
-            const projectIdeaInput = document.getElementById('project-idea-input');
-            const inquiryError = document.getElementById('inquiry-error');
-
-            const mySkills = "PHP, Laravel, WordPress, Javascript, Python (FastAPI, Web Scraping), React.js, Vue.js, Node.js, Tailwind CSS, MySQL, MongoDB, n8n, AWS, CI/CD, Docker, Generative AI (ChatGPT, Claude, MCP)";
-
-            // --- Modal Controls ---
-            function openModal() {
-                modal.classList.remove('hidden');
-                document.body.style.overflow = 'hidden';
-                // Animate modal panel
-                setTimeout(() => {
-                    modalPanel.classList.remove('scale-95', 'opacity-0');
-                    modalPanel.classList.add('scale-100', 'opacity-100');
-                }, 10);
-            }
-
-            function closeModal() {
-                modalPanel.classList.remove('scale-100', 'opacity-100');
-                modalPanel.classList.add('scale-95', 'opacity-0');
-                setTimeout(() => {
-                    modal.classList.add('hidden');
-                    document.body.style.overflow = '';
-                    // Reset modal state
-                    modalSpinner.classList.add('hidden');
-                    modalContent.innerHTML = '';
-                    modalContent.classList.remove('hidden');
-                }, 300); // Match transition duration
-            }
-
-            modalCloseBtn.addEventListener('click', closeModal);
-            // Close modal when clicking on the overlay
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    closeModal();
-                }
-            });
-
-            // --- API Call Function ---
-            /**
-             * Calls the Gemini API with exponential backoff.
-             * @param {string} prompt The prompt to send to the model.
-             * @returns {Promise<string>} The generated text.
-             */
-            async function callGeminiApi(prompt) {
-                const apiKey = ""; // API key will be provided by the environment
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
-                
-                const payload = {
-                    contents: [{ parts: [{ text: prompt }] }],
-                    // Optional: Add safety settings
-                    // safetySettings: [
-                    //     { category: "HARM_CATEGORY_DANGEROUS_CONTENT", threshold: "BLOCK_MEDIUM_AND_ABOVE" }
-                    // ]
-                };
-
-                let retries = 3;
-                let delay = 1000;
-
-                while (retries > 0) {
-                    try {
-                        const response = await fetch(apiUrl, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(payload)
-                        });
-
-                        if (!response.ok) {
-                            if (response.status === 429 || response.status >= 500) {
-                                // Throttling or server error, worth retrying
-                                throw new Error(`API Error ${response.status}: Retrying...`);
-                            } else {
-                                // Client error, don't retry
-                                const errorData = await response.json();
-                                console.error("API Error:", errorData);
-                                return `Error: ${errorData.error.message || 'Failed to get a response from the AI.'}`;
-                            }
-                        }
-
-                        const result = await response.json();
-                        
-                        if (result.candidates && result.candidates[0].content?.parts?.[0]?.text) {
-                            return result.candidates[0].content.parts[0].text;
-                        } else {
-                            // Handle cases like safety blocks
-                            if (result.candidates && result.candidates[0].finishReason === 'SAFETY') {
-                                return "The response was blocked due to safety settings.";
-                            }
-                            throw new Error("Invalid response structure from API.");
-                        }
-
-                    } catch (error) {
-                        console.warn(error.message);
-                        retries--;
-                        if (retries === 0) {
-                            // Mock response for demonstration if API key is missing
-                            if (apiKey === "") {
-                                console.log("API Key is missing. Returning mock data.");
-                                return `Hi Sourav,\n\nI hope you're doing well.\n\nI came across your portfolio and was really impressed with your experience, especially with Laravel and React.js. I have a project idea for "${prompt.match(/"(.*?)"/)[1]}" and I think your skills would be a great fit.\n\nWould you be available for a brief chat sometime next week to discuss this further?\n\nBest regards,\n\n[Your Name]`;
-                            }
-                            return `Error: Unable to connect to the AI model after several attempts. Please try again later.`;
-                        }
-                        await new Promise(resolve => setTimeout(resolve, delay));
-                        delay *= 2; // Exponential backoff
-                    }
-                }
-            }
-
-            // --- Feature 1: Generate Project Ideas (Removed) ---
-            
-            // --- Feature 2: Draft Inquiry ---
-            draftInquiryBtn.addEventListener('click', async () => {
-                const idea = projectIdeaInput.value;
-                if (!idea) {
-                    inquiryError.classList.remove('hidden');
-                    return;
-                }
-                inquiryError.classList.add('hidden');
-
-                openModal();
-                modalTitle.textContent = "Drafting Your Inquiry...";
-                modalSpinner.classList.remove('hidden');
-                modalContent.classList.add('hidden');
-
-                const prompt = `
-                    Act as a friendly assistant helping a potential client contact me (Sourav).
-                    The client has a project idea: "${idea}".
-                    My name is Sourav Chakraborty, and my skills include ${mySkills}.
-                    Draft a concise, professional, and friendly email inquiry (2-3 paragraphs) from the client to me.
-                    The message should:
-                    1. Start with "Hi Sourav,".
-                    2. Briefly introduce their project idea.
-                    3. Mention they saw my portfolio and are interested in my skills.
-                    4. Ask if I'm available to discuss the project.
-                    5. End with a sign-off like "Best regards," (with a blank for their name).
-                    
-                    Return ONLY the text of the draft message, starting with "Hi Sourav,".
-                `;
-
-                const response = await callGeminiApi(prompt);
-
-                modalTitle.textContent = "Here's Your Drafted Inquiry";
-                modalSpinner.classList.add('hidden');
-                modalContent.classList.remove('hidden');
-
-                modalContent.innerHTML = `
-                    <p class="mb-4">You can copy this text and send it to me via email.</p>
-                    <textarea id="draft-textarea" class="w-full h-64 p-3 border border-gray-300 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500" readonly>${response}</textarea>
-                    <button id="copy-draft-btn" class="w-full mt-4 px-6 py-3 bg-indigo-600 text-white font-medium rounded-lg shadow-md hover:bg-indigo-700 transition-all duration-300">
-                        Copy to Clipboard
-                    </button>
-                    <p id="copy-success" class="text-green-500 text-center mt-2 hidden">Copied!</p>
-                `;
-
-                // Add event listener for the new copy button
-                document.getElementById('copy-draft-btn').addEventListener('click', () => {
-                    const textarea = document.getElementById('draft-textarea');
-                    // Use a fallback for execCommand
-                    try {
-                        textarea.select();
-                        document.execCommand('copy');
-                        
-                        const copySuccess = document.getElementById('copy-success');
-                        copySuccess.classList.remove('hidden');
-                        setTimeout(() => copySuccess.classList.add('hidden'), 2000);
-
-                    } catch (err) {
-                        console.error('Failed to copy text: ', err);
-                        alert('Failed to copy. Please copy the text manually.');
-                    }
-                });
-            });
-
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
         });
-    </script>
+      }, { threshold: 0.1 });
+
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+      const scrollBtn = document.getElementById('scrollTopBtn');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 600) scrollBtn.classList.add('show');
+        else scrollBtn.classList.remove('show');
+      });
+      scrollBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+      const yearEl = document.getElementById('year');
+      if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+      // AI inquiry helper
+      const modal = document.getElementById('gemini-modal');
+      const modalPanel = document.getElementById('modal-panel');
+      const modalTitle = document.getElementById('modal-title');
+      const modalSpinner = document.getElementById('modal-spinner');
+      const modalContent = document.getElementById('modal-content');
+      const projectIdeaInput = document.getElementById('project-idea-input');
+      const draftBtn = document.getElementById('draft-inquiry-btn');
+      const inquiryError = document.getElementById('inquiry-error');
+
+      if (modal && modalPanel && modalTitle && modalSpinner && modalContent && projectIdeaInput && draftBtn && inquiryError) {
+        const openModal = () => {
+          modal.classList.remove('hidden');
+          setTimeout(() => {
+            modalPanel.classList.remove('opacity-0', 'scale-95');
+            modalPanel.classList.add('opacity-100', 'scale-100');
+          }, 20);
+        };
+
+        const closeModal = () => {
+          modalPanel.classList.add('opacity-0', 'scale-95');
+          modalPanel.classList.remove('opacity-100', 'scale-100');
+          setTimeout(() => {
+            modal.classList.add('hidden');
+            modalSpinner.classList.add('hidden');
+            modalContent.innerHTML = '';
+          }, 200);
+        };
+
+        modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+        const modalCloseBtn = document.getElementById('modal-close-btn');
+        if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeModal);
+
+        const mySkills = "PHP, Laravel, WordPress, Javascript, Python (FastAPI, Web Scraping), React.js, Vue.js, Node.js, Tailwind CSS, MySQL, MongoDB, n8n, AWS, CI/CD, Docker, Generative AI (ChatGPT, Claude, MCP)";
+
+        async function callGeminiApi(prompt) {
+          const apiKey = "";
+          const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+          const payload = { contents: [{ parts: [{ text: prompt }] }] };
+          let retries = 3;
+          let delay = 1000;
+
+          while (retries > 0) {
+            try {
+              const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+              if (!response.ok) {
+                if (response.status === 429 || response.status >= 500) throw new Error("Retryable error");
+                const errorData = await response.json();
+                return errorData.error?.message || 'Unable to draft right now.';
+              }
+              const data = await response.json();
+              return data.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || 'No response generated.';
+            } catch (err) {
+              retries -= 1;
+              if (!retries) return 'The AI assistant is unavailable right now. Please try again later.';
+              await new Promise(res => setTimeout(res, delay));
+              delay *= 1.5;
+            }
+          }
+        }
+
+        draftBtn.addEventListener('click', async () => {
+          const idea = projectIdeaInput.value.trim();
+          if (!idea) {
+            inquiryError.classList.remove('hidden');
+            return;
+          }
+          inquiryError.classList.add('hidden');
+          openModal();
+          modalTitle.textContent = "Drafting your message...";
+          modalSpinner.classList.remove('hidden');
+
+          const prompt = `
+            Act as a potential client writing to Sourav Chakraborty about the idea "${idea}".
+            Mention you saw his portfolio, highlight why his skills (${mySkills}) fit, and end with a friendly request to discuss.
+            Keep it 2-3 short paragraphs and start with "Hi Sourav,".
+          `;
+
+          const response = await callGeminiApi(prompt);
+
+          modalSpinner.classList.add('hidden');
+          modalTitle.textContent = "Here's your polished inquiry";
+
+          modalContent.innerHTML = `
+            <textarea id="draft-textarea" class="w-full h-56 rounded-2xl border border-black/10 dark:border-white/10 bg-white dark:bg-white/5 p-4 text-slate-900 dark:text-white" readonly>${response}</textarea>
+            <button id="copy-draft-btn" class="w-full rounded-2xl px-6 py-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-semibold">Copy</button>
+            <p id="copy-success" class="hidden text-emerald-500 dark:text-emerald-400 text-sm">Copied to clipboard.</p>
+          `;
+
+          document.getElementById('copy-draft-btn').addEventListener('click', () => {
+            const textarea = document.getElementById('draft-textarea');
+            textarea.select();
+            document.execCommand('copy');
+            const success = document.getElementById('copy-success');
+            success.classList.remove('hidden');
+            setTimeout(() => success.classList.add('hidden'), 2000);
+          });
+        });
+      }
+    });
+  </script>
 </body>
 </html>
